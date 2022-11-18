@@ -105,13 +105,21 @@ void Conjunto<T>::remover(const T& clave) {
     }
     else if (actual->der == nullptr || actual->izq == nullptr){ // Tiene un solo hijo.
         if (actual->der == nullptr){
-            actual->p->izq = actual->izq;
+            if (actual == actual->p->izq) {
+                actual->p->izq = actual->izq;
+            } else {
+                actual->p->der = actual->izq;
+            }
             actual->izq->p = actual->p;
             delete actual;
             _cardinal--;
         }
         else {
-            actual->p->der = actual->der;
+            if (actual == actual->p->izq) {
+                actual->p->izq = actual->der;
+            } else {
+                actual->p->der = actual->der;
+            }
             actual->der->p = actual->p;
             delete actual;
             _cardinal--;
