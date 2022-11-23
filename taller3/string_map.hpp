@@ -8,30 +8,37 @@ string_map<T>::string_map(const string_map<T>& aCopiar) : string_map() { *this =
 
 template <typename T>
 string_map<T>& string_map<T>::operator=(const string_map<T>& original) {
-    //borrar contenido preexistente
+    raiz->borrarNodos();
+    delete raiz;
     raiz = new Nodo();
     raiz->copiarNodos(original.raiz);
     _size = original.size();
 }
 
 template <typename T>
+string_map<T>::~string_map() {
+    raiz->borrarNodos();
+    delete raiz;
+    raiz = nullptr;
+}
+
+
+template <typename T>
 void string_map<T>::Nodo::copiarNodos(Nodo* original) {
     for (int i = 0; i < 256; ++i) {
         if (original->definicion != nullptr) {
+            delete definicion;
             definicion = new T(*original->definicion);
         }
         if(original->siguientes[i] != nullptr){
+            delete siguientes[i];
             siguientes[i] = new Nodo();
             siguientes[i]->copiarNodos(original->siguientes[i]);
         } else {
+            delete siguientes[i];
             siguientes[i] = nullptr;
         }
     }
-}
-
-template <typename T>
-string_map<T>::~string_map(){
-    // COMPLETAR
 }
 
 template <typename T>
@@ -55,9 +62,12 @@ void string_map<T>::insert(const pair<string, T>& cv){
             actual = actual->siguientes[int(cv.first[i])];
         }
     }
-    actual->definicion = new T (cv.second);
     if (nuevaClave){
         _size++;
+        actual->definicion = new T (cv.second);
+    } else {
+        delete actual->definicion;
+        actual->definicion = new T (cv.second);
     }
 }
 
@@ -122,6 +132,8 @@ void string_map<T>::Nodo::borrarNodos() {
             delete siguientes[i];
         }
     }
+    delete this->definicion;
+    definicion = nullptr;
 }
 
 template <typename T>
