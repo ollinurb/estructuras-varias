@@ -145,6 +145,7 @@ void string_map<T>::erase(const string& clave) {
         for (int j = 0; j < 256; j++) {
             if (j != int(clave[i]) && actual->siguientes[j] != nullptr){
                 ultimoNodoUtil = actual;
+                ultimoIndice = i;
             }
         }
         actual = actual->siguientes[int(clave[i])];
@@ -153,6 +154,7 @@ void string_map<T>::erase(const string& clave) {
         }
         }
     if (actual == ultimoNodoUtil) {
+        delete actual->definicion;
         actual->definicion = nullptr;
     } else if (actual->trieVacio(actual->siguientes) && ultimoNodoUtil != raiz) {
         ultimoNodoUtil->siguientes[ultimoIndice]->borrarNodos(); //mirar aca
