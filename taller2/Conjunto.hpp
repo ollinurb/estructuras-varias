@@ -97,9 +97,9 @@ void Conjunto<T>::remover(const T& clave) {
             } else {
                     if (actual->der == nullptr) {
                         if (anterior->der == actual) {
-                            anterior->der == actual->izq;
+                            anterior->der = actual->izq;
                         } else {
-                            anterior->izq == actual->izq;
+                            anterior->izq = actual->izq;
                         }
                     } else {
                         if (anterior->der == actual) {
