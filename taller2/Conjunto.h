@@ -45,13 +45,14 @@ class Conjunto
         // Muestra el conjunto.
         void mostrar(std::ostream&) const;
 
+
     private:
 
         unsigned int _cardinal;
         struct Nodo
         {
             // El constructor, toma el elemento al que representa el nodo.
-            Nodo(const T& v) : izq(nullptr), der(nullptr), p(nullptr) {
+            Nodo(const T& v) : izq(nullptr), der(nullptr) /*p(nullptr)*/ {
                 this->valor = v;
             };
             // El elemento al que representa el nodo.
@@ -60,13 +61,13 @@ class Conjunto
             Nodo* izq;
             // Puntero a la raíz del subárbol derecho.
             Nodo* der;
-            // Puntero a padre.
-            Nodo* p;
         };
 
         // Puntero a la raíz de nuestro árbol.
         Nodo* _raiz;
         void destruirNodos(Nodo* nodo);
+        const T& ultimoPadreDerecho(Nodo*, T);
+
 };
 
 template<class T>
